@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,51 +31,64 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  YoutubePlayerController _controller = YoutubePlayerController(
+      initialVideoId: 'BE9ATY2Ygas', // id youtube video
+      flags: YoutubePlayerFlags(
+        autoPlay: true,
+        mute: false,
+      ));
 
   int _page = 0;
   GlobalKey _bottomNavigationKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: CurvedNavigationBar(
-        color: Colors.red,
-        backgroundColor: Colors.grey[400],
-        key: _bottomNavigationKey,
-        items: <Widget>[
-          Icon(Icons.add, size: 30),
-          Icon(Icons.list, size: 30),
-          Icon(Icons.compare_arrows, size: 30),
-        ],
-        onTap: (index) {
-          setState(() {
-            _page = index;
-          });
-        },
-      ),
-      body: Container(
-        color: Colors.grey[400],
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              Text(_page.toString(), textScaleFactor: 10.0),
-              RaisedButton(
-                child: Text('Go To Page of index 1'),
-                onPressed: () {
-                  //Page change using state does the same as clicking index 1 navigation button
-                  final CurvedNavigationBarState navBarState =
-                      _bottomNavigationKey.currentState;
-                  navBarState.setPage(1);
-                },
-              )
-            ],
+    return SafeArea(
+      child: Scaffold(
+        bottomNavigationBar: CurvedNavigationBar(
+          color: Colors.red,
+          backgroundColor: Colors.grey[400],
+          key: _bottomNavigationKey,
+          items: <Widget>[
+            Icon(Icons.add, size: 30),
+            Icon(Icons.list, size: 30),
+            Icon(Icons.compare_arrows, size: 30),
+          ],
+          onTap: (index) {
+            setState(() {
+              _page = index;
+            });
+          },
+        ),
+        body: Container(
+          //Stick the video player here
+          color: Colors.grey[400],
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                YoutubePlayer(
+                  controller: _controller,
+                  showVideoProgressIndicator: true,
+                  onReady: () {
+                    print('Player is ready');
+                  },
+                ),
+                RaisedButton(
+                  child: Text('Play Video 1'),
+                  onPressed: () {
+                    // Load lawn mower dreams of the moon
+                    _controller.load('OfVh1v7GGKY');
+                  },
+                ),
+                RaisedButton(
+                  child: Text('Play Video 2'),
+                  onPressed: () {
+                    // Load lawn mower dreams of the moon
+                    _controller.load('BE9ATY2Ygas');
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),
