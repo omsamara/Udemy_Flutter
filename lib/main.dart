@@ -45,21 +45,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        bottomNavigationBar: CurvedNavigationBar(
-          color: Colors.red,
-          backgroundColor: Colors.grey[400],
-          key: _bottomNavigationKey,
-          items: <Widget>[
-            Icon(Icons.add, size: 30),
-            Icon(Icons.list, size: 30),
-            Icon(Icons.compare_arrows, size: 30),
-          ],
-          onTap: (index) {
-            setState(() {
-              _page = index;
-            });
-          },
-        ),
         body: Container(
           //Stick the video player here
           color: Colors.grey[400],
@@ -74,22 +59,37 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                 ),
                 RaisedButton(
-                  child: Text('Play Video 1'),
+                  child: Text('Lawn mower dreams of the moon'),
                   onPressed: () {
                     // Load lawn mower dreams of the moon
                     _controller.load('OfVh1v7GGKY');
                   },
                 ),
                 RaisedButton(
-                  child: Text('Play Video 2'),
+                  child: Text('Dreams are stolen'),
                   onPressed: () {
                     // Load lawn mower dreams of the moon
-                    _controller.load('BE9ATY2Ygas');
+                    _controller.load('IANwb_qT1gg', startAt: 76);
                   },
                 )
               ],
             ),
           ),
+        ),
+        bottomNavigationBar: CurvedNavigationBar(
+          color: Colors.red,
+          backgroundColor: Colors.grey[400],
+          key: _bottomNavigationKey,
+          items: <Widget>[
+            Icon(Icons.add, size: 30),
+            Icon(Icons.list, size: 30),
+            Icon(Icons.compare_arrows, size: 30),
+          ],
+          onTap: (index) {
+            setState(() {
+              _page = index;
+            });
+          },
         ),
       ),
     );
